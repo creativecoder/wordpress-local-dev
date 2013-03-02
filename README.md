@@ -74,14 +74,14 @@ Modify your system host file to redirect to localhost when that server name is e
 
 ## Tips ##
 
-### Update all your local WordPress sites at once ###
+### Update all your local WordPress sites at once (pulls development version) ###
 
 	$ cd wordpress
 	$ git pull
 
-### Revert to a previous WordPress version
+### Set WordPress to current production version (or revert to a previous version) ###
 
-	$ git checkout 3.4-branch
+	$ git checkout 3.5-branch
 
 ## Troubleshooting ##
 
