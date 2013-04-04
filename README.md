@@ -4,7 +4,7 @@
 
 For each site, WordPress core files are separated from wp-content into their own subfolder. That subfolder is actually a symbolic link to a single copy of the WordPress core files.
 
-The wp-config.php file is configured to use different database settings for each site, by looking for a unique db-config.php file within the folder for each different site.
+A pointer wp-config file sits next to this single copy of core files and dynamically points to the correct wp-config file within the directory for each site.
 
 ## Requirements ##
 
@@ -24,12 +24,16 @@ First, clone the repository into a folder on your local development server. Be s
 The project has the following structure
 
 	Project root ..	
-	- wp-config.php file (used for all sites)
+	- wp-config.php file (used for local development only; points to each site folder dynamically, depending on which site is being loaded)
 	- wordpress (git submodule of the official WordPress git repository )
 	- sample.local (sample site folder)
+		- index.php (which looks in the /wordpress folder to run wordpress)
 		- wp-content folder (for themes and plugins)
-		- db-config.php (database name, user, password, and prefix unique to each site)
-		- index.php (which looks in the /wordpress folder)
+		- wp-config.php (site configuration, except for database credientials, which go in files below)
+		- local-config.php (database credentials for local environment)
+		- dev-config.php (database credentials for local environment)
+		- staging-config.php (database credentials for local environment)
+		- production-config.php (database credentials for local environment)
 
 **Important:** create a symlink to the WordPress core files for each site (this is where the magic happens)
 
@@ -38,7 +42,11 @@ The project has the following structure
 
 ## Database Configuration ##
 
-Each site should have its own database. The specifics are listed in the db-config.php file within each unique site folder.
+Each site should have its own separate database. The specifics are listed in the various *-config.php files. Put these files in the .gitignore file for your project so that credentials are not stored in version control.
+
+Remove the files not needed on each development environment. For example, your production server should only have production-config.php (local-config.php, staging-config.php, and dev-config.php should be deleted from the production server).
+
+For *-config.php files on your dev, staging, and production servers, you can place these one directory above the root directory of your site. (This won't work for the local-config.php file, however.)
 
 ## Apache Configuration ##
 
@@ -69,7 +77,7 @@ Modify your system host file to redirect to localhost when that server name is e
 
 * Make a copy of your first site
 * Set up a new database for the site
-* Modify the db-config.php file to connect your new database
+* Modify the *-config.php files to connect the sites database in each server environment
 * Set up another virtual host
 
 ## Tips ##
@@ -88,10 +96,11 @@ Modify your system host file to redirect to localhost when that server name is e
 Check that each site folder has the following:
 
 * index.php (which reads `require('./wordpress/wp-blog-header.php');`)
-* db-config.php with correct database information
+* local-config.php with correct database information
 * wp-content folder
+* wp-config.php (in addition to the first wp-config.php in the parent directory)
 * symbolic link to wordpress directory
 
 **Make sure that the ServerName of your virtual host and the directory for your site have the same name.**
 
-Thanks to [David Winter](http://davidwinter.me/articles/2012/04/09/install-and-manage-wordpress-with-git/) and [Duane Storey](http://www.duanestorey.com/uncategorized/one-wordpress-install-multiple-sites/) for leading the way
+Thanks to [David Winter](http://davidwinter.me/articles/2012/04/09/install-and-manage-wordpress-with-git/), [Duane Storey](http://www.duanestorey.com/uncategorized/one-wordpress-install-multiple-sites/), and [ashfame](https://gist.github.com/ashfame/1923821) for leading the way
