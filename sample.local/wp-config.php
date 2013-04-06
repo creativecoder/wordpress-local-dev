@@ -48,7 +48,7 @@ elseif ( file_exists( CONFIG_PATH . '/../staging-config.php' ) )
 elseif ( file_exists( CONFIG_PATH . '/../production-config.php' ) )
 	require CONFIG_PATH . '/../production-config.php';
 else
-	require CONFIG_PATH . '/../production-config.php';
+	require CONFIG_PATH . '/production-config.php';
 
 /**
  * WordPress Database Table prefix.
