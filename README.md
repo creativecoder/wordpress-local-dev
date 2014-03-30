@@ -103,4 +103,12 @@ Check that each site folder has the following:
 
 **Make sure that the ServerName of your virtual host and the directory for your site have the same name.**
 
+## Note ##
+
+This repo is meant to show the structure of how to set this system up, not for version controlling each site. To put your site code under version control, you should:
+
+- Delete the `.git` and `.gitmodules` folder/file from the project directory
+- do a `git init` within the folder for each site
+- Pull down a copy of wordpress, if you haven't already initialized submodules
+
 Thanks to [David Winter](http://davidwinter.me/articles/2012/04/09/install-and-manage-wordpress-with-git/), [Duane Storey](http://www.duanestorey.com/uncategorized/one-wordpress-install-multiple-sites/), and [ashfame](https://gist.github.com/ashfame/1923821) for leading the way
